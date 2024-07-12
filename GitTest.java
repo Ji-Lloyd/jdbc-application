@@ -1,7 +1,14 @@
 public class GitTest {
     private String name;
     private String address;
-    
+    private int age;
+
+    public int getAge() {
+        return age;
+    }
+    public void setAge(int age) {
+        this.age = age;
+    }
     public String getName() {
         return name;
     }
@@ -15,5 +22,6 @@ public class GitTest {
         this.address = address;
     }
 
+    
 
 }
