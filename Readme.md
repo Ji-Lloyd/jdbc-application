@@ -1,1 +1,1 @@
-This is test ground for Java
+This project is a simple application of JDBC

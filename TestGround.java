@@ -7,21 +7,10 @@ import java.util.Scanner;
 
 public class TestGround {
     public static void main(String[] args) {
+
+        UserDAO userClass = new UserDAO();
+
         Scanner scan = new Scanner(System.in);
-
-        System.out.print("Enter ID: ");
-        String userID = scan.nextLine();
-
-        System.out.print("Enter first name: ");
-        String firstName = scan.nextLine();
-
-        System.out.print("Enter middle name: ");
-        String middleName = scan.nextLine();
-
-        System.out.print("Enter last name: ");
-        String lastName = scan.nextLine();
-
-        scan.close();
 
         
         final String DATABASEURL = "jdbc:mysql://localhost:3306/userDB";
@@ -30,35 +19,68 @@ public class TestGround {
 
         final String insertUserStatement = "INSERT INTO users (userID, firstName, middleName, lastName) VALUES (?,?,?,?)";
 
+        Connection sqlConnection;
+
+        System.out.print("1: Insert User \n2: Retrieve All User \n3: Update User \n4: Delete User \n5: Exit System");
+        int clientChoice = scan.nextInt();
+        
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
+            sqlConnection = DriverManager.getConnection(DATABASEURL, dbUsername, dbPassword);
 
-            Connection sqlConnection = DriverManager.getConnection(DATABASEURL, dbUsername, dbPassword);
+            switch (clientChoice) {
+                case 1:
+                    System.out.print("Enter ID: ");
+                    userClass.setUserID(scan.nextLine());
+            
+                    System.out.print("Enter first name: ");
+                    userClass.setFirstName(scan.nextLine());
+            
+                    System.out.print("Enter middle name: ");
+                    userClass.setMiddleName(scan.nextLine());
+            
+                    System.out.print("Enter last name: ");
+                    userClass.setLastName(scan.nextLine());
+            
+                    PreparedStatement inserStatement= sqlConnection.prepareStatement(insertUserStatement);
+        
+                    inserStatement.setInt(1, Integer.parseInt(userClass.getUserID()));
+                    inserStatement.setString(2, userClass.getFirstName());
+                    inserStatement.setString(3, userClass.getMiddleName());
+                    inserStatement.setString(4, userClass.getLastName());
+        
+                    inserStatement.executeUpdate();
+                    break;
 
-           
-            PreparedStatement inserStatement= sqlConnection.prepareStatement(insertUserStatement);
-
-            inserStatement.setInt(1, Integer.parseInt(userID));
-            inserStatement.setString(2, firstName);
-            inserStatement.setString(3, middleName);
-            inserStatement.setString(4, lastName);
-
-            inserStatement.executeUpdate();
-
-            Statement readStatement = sqlConnection.createStatement();
+                case 2:
+                    Statement readStatement = sqlConnection.createStatement();
 
 
-            ResultSet resultSet =  readStatement.executeQuery("SELECT * FROM users");
+                    ResultSet resultSet =  readStatement.executeQuery("SELECT * FROM users");
+        
+                    while(resultSet.next()){
+                        System.out.println(resultSet.getString(1) + " : " + resultSet.getString(2) + " " + resultSet.getString(3) + " " + resultSet.getString(4));
+                    }
+                    break;
 
-            while(resultSet.next()){
-                System.out.println(resultSet.getString(1) + " : " + resultSet.getString(2) + " " + resultSet.getString(3) + " " + resultSet.getString(4));
+                case 5:
+                    System.exit(0);
+                    break;
+
+                default:
+                    System.out.println("Wrong Input. Pick Again...");
+                    break;
             }
 
             sqlConnection.close();
         }catch(Exception exception){
             exception.printStackTrace();
+        }finally{
+            scan.close();
         }
 
 
     }
+
+    
 }
