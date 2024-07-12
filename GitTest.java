@@ -3,6 +3,10 @@ public class GitTest {
     private String address;
     private int age;
 
+    public GitTest(){
+
+    }
+
     public int getAge() {
         return age;
     }
