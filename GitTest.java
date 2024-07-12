@@ -26,6 +26,13 @@ public class GitTest {
         this.address = address;
     }
 
+    @Override
+    public String toString() {
+        return "GitTest [name=" + name + ", address=" + address + ", age=" + age + "]";
+    }
+
+    
+
     
 
 }
