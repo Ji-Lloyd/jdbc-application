@@ -7,6 +7,10 @@ public class GitTest {
 
     }
 
+    public GitTest(String name){
+
+    }
+
     public int getAge() {
         return age;
     }
