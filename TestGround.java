@@ -22,6 +22,7 @@ public class TestGround {
 
         Connection sqlConnection;
 
+        System.out.println("____________________________________");
         System.out.print("->JDBC Application<- \n1: Insert User \n2: Retrieve All User \n3: Update User \n4: Delete User \n5: Exit System \nChoose: ");
         int clientChoice = scan.nextInt();
 
@@ -55,6 +56,7 @@ public class TestGround {
                     insertStatement.setString(4, userClass.getLastName());
         
                     insertStatement.executeUpdate();
+                    main(args);
                     break;
 
                 case 2:
@@ -62,6 +64,7 @@ public class TestGround {
                     while(resultSet.next()){
                         System.out.println(resultSet.getString(1) + " : " + resultSet.getString(2) + " " + resultSet.getString(3) + " " + resultSet.getString(4));
                     }
+                    main(args);
                     break;
 
                 case 3: 
@@ -85,6 +88,7 @@ public class TestGround {
                     updateStatement.setInt(4, Integer.parseInt(userClass.getUserID()));
 
                     updateStatement.executeUpdate();
+                    main(args);
                     break;
 
                 case 4:
@@ -101,6 +105,7 @@ public class TestGround {
                     while(updatedResultSet.next()){
                         System.out.println(updatedResultSet.getString(1) + " : " + updatedResultSet.getString(2) + " " + updatedResultSet.getString(3) + " " + updatedResultSet.getString(4));
                     }
+                    main(args);
                     break;
 
                 case 5:
